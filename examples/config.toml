@@ -1,0 +1,36 @@
+﻿# EasyTier 配置文件示例
+# 使用方法: easytier-core -c config.toml
+#
+# 修改下方参数后使用:
+#   network_name / network_secret  需与 Worker 中配置一致
+#   peers[0]                       替换为你的 Worker 地址
+
+[network_identity]
+network_name = "my-private-network"
+network_secret = "my-strong-secret-123"
+
+# 启用私有模式，拒绝其他网络的节点连接
+private_mode = true
+
+# DHCP 自动分配虚拟 IP
+dhcp = true
+
+# 连接到 CF Worker WSS 中继
+# 注意: URL 中的 name 和 secret 参数用于 Worker 鉴权
+[[peers]]
+uri = "wss://cf-easytier-relay.your-subdomain.workers.dev/?name=my-private-network&secret=my-strong-secret-123"
+
+# 可选: 同时连接其他公共节点提高可用性
+# [[peers]]
+# uri = "tcp://public-node.example.com:11010"
+
+# 监听端口（本地，用于其他节点直连，非必须）
+# [listeners]
+# tcp = "0.0.0.0:11010"
+# udp = "0.0.0.0:11010"
+# ws = "0.0.0.0:11011"
+# wss = "0.0.0.0:11012"
+
+# 日志级别
+[log]
+level = "info"

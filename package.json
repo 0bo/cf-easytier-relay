@@ -1,0 +1,23 @@
+{
+  "name": "cf-easytier-relay",
+  "version": "1.0.0",
+  "description": "Deploy EasyTier shared relay node on Cloudflare Workers with private mode support",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "keywords": [
+    "easytier",
+    "cloudflare-workers",
+    "relay",
+    "websocket",
+    "vpn",
+    "mesh-network"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}

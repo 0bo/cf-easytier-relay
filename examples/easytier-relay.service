@@ -1,0 +1,32 @@
+﻿# /etc/systemd/system/easytier-relay.service
+#
+# 将 EasyTier 客户端注册为系统服务，连接到 CF Worker 中继。
+# 安装方法:
+#   sudo cp easytier.service /etc/systemd/system/easytier-relay.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now easytier-relay
+#
+# 修改下方 ExecStart 中的参数:
+#   --network-name     你的网络名称（需与 Worker 中 DEFAULT_NETWORK_NAME 一致）
+#   --network-secret   你的网络密钥（需与 Worker 中 DEFAULT_NETWORK_SECRET 一致）
+#   -p wss://...       你的 Worker 地址，URL 中带 name 和 secret 查询参数
+#   --private-mode     启用私有模式（可选，Worker 已做鉴权）
+
+[Unit]
+Description=EasyTier Relay Client (via Cloudflare Worker WSS)
+After=network-online.target syslog.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/easytier-core \
+  --network-name my-private-network \
+  --network-secret my-strong-secret-123 \
+  --private-mode true \
+  -p "wss://cf-easytier-relay.your-subdomain.workers.dev/?name=my-private-network&secret=my-strong-secret-123"
+Restart=always
+RestartSec=5
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target
